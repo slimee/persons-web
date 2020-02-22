@@ -1,5 +1,5 @@
 <template>
-  <svg id="surface" ref="surface" class="surface" :viewBox="viewBoxStr" style="pointer-events: all"
+  <svg id="surface" ref="surface" class="surface no-select" :viewBox="viewBoxStr" style="pointer-events: all"
        v-touch:start="startDrag"
        v-touch:moving="drag"
        v-touch:end="endDrag"
@@ -46,11 +46,11 @@
       ...mapActions('search', ['loadNextPage']),
       startDrag(e) {
         this.cameraPan = { x: this.camera.panx, y: this.camera.pany }
-        this.downPoint = { x: e.clientX, y: e.clientY }
+        this.downPoint = { x: e.screenX, y: e.screenY }
       },
       drag(e) {
         if (this.downPoint) {
-          const dragPoint = { x: e.clientX, y: e.clientY }
+          const dragPoint = { x: e.screenX, y: e.screenY }
           const deltaPoint = minus(this.downPoint, dragPoint)
           const point = add(this.cameraPan, deltaPoint)
           this.lookAt({ ...point, direct: true })
