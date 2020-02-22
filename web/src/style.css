@@ -75,7 +75,7 @@ text {
     --timeline-bigdate-font-weight: bold;
     --timeline-bigdate-font-color: var(--black);
     --timeline-color: var(--white-transparent);
-    --timeline-border-width: 1px;
+    --timeline-border-width: 0,5px;
     --timeline-border-color: var(--black);
 
     --transition-speed: .3s;
