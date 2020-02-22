@@ -77,17 +77,19 @@
   }
 
   .grid-future-back {
-    fill: var(--future-color)
+    fill: var(--future-color);
+    transition: fill var(--transition-speed);
   }
 
   .grid-future-back2 {
-    fill: var(--future-color2)
+    fill: var(--future-color2);
+    transition: fill var(--transition-speed);
   }
 
   .grid-future-rect {
     /*fill: var(--grid-future-rect-color);*/
     /*opacity: var(--grid-future-rect-opacity);*/
-    filter:url(#dropshadow);
+    filter: url(#dropshadow);
     fill: url(#pattern)
   }
 </style>
