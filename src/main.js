@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './plugins/router'
 import store from './plugins/store'
 import vuexRouterSync from './plugins/vuex-router-sync'
+import vue2TouchEvents from './plugins/vue2-touch-events'
 import css from "./style.css"
 
 Vue.config.productionTip = false

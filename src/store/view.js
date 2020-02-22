@@ -85,12 +85,6 @@ export default {
         y: getters.tileY(row),
       })
     },
-    lookAtOffset: ({ dispatch, state }, { x, y }) =>
-      dispatch('lookAt', {
-        x: state.camera.panx - x,
-        y: state.camera.pany - y,
-        direct: true,
-      }),
     resizeWindow: ({ commit }, window) => commit('resizeWindow', window),
   },
   getters: {

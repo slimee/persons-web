@@ -1,5 +1,9 @@
 <template>
-  <svg id="surface" ref="surface" class="surface" :viewBox="viewBoxStr" style="pointer-events: all">
+  <svg id="surface" ref="surface" class="surface" :viewBox="viewBoxStr" style="pointer-events: all"
+       v-touch:start="startDrag"
+       v-touch:moving="drag"
+       v-touch:end="endDrag"
+  >
 
     <VerticalLines/>
 
@@ -19,58 +23,47 @@
 </template>
 
 <script>
-  import Hammer from 'hammerjs'
-  import startPan from '../../services/startPan'
   import PersonTile from './PersonTile'
   import Timeline from '../timeline/Timeline'
   import IndicateTile from './IndicationTile'
   import VerticalLines from './lines/VerticalLines'
   import PresentFutureLines from './lines/PresentFutureLines'
   import Indications from './Indications'
-  import { mapActions, mapGetters } from 'vuex'
+  import { mapActions, mapGetters, mapState } from 'vuex'
+
+  const minus = (p1, p2) => ({ x: p1.x - p2.x, y: p1.y - p2.y })
+  const add = (p1, p2) => ({ x: p1.x + p2.x, y: p1.y + p2.y })
 
   export default {
     name: 'TilesMap',
     components: { Indications, PresentFutureLines, VerticalLines, IndicateTile, Timeline, PersonTile },
     data: () => ({
-      touch: null,
-      domRef: null,
+      downPoint: null,
+      cameraPan: null,
     }),
     methods: {
-      ...mapActions('view', ['lookAtOffset', 'lookAtNearestValid']),
+      ...mapActions('view', ['lookAt', 'lookAtNearestValid']),
       ...mapActions('search', ['loadNextPage']),
-      onPanEnd() {
-        this.lookAtNearestValid()
+      startDrag(e) {
+        this.cameraPan = { x: this.camera.panx, y: this.camera.pany }
+        this.downPoint = { x: e.clientX, y: e.clientY }
       },
-      svgDown: function (evt) {
-        startPan({
-          evt,
-          applyCameraOffset: this.lookAtOffset,
-          domRef: this.domRef,
-          pen: this.pen,
-          touch: this.touch,
-          onEnd: this.onPanEnd,
-        })
-      },
-      initDomRef() {
-        this.domRef = {
-          svg: document.getElementById('surface'),
-          svgPoint: document.getElementById('surface').createSVGPoint(),
+      drag(e) {
+        if (this.downPoint) {
+          const dragPoint = { x: e.clientX, y: e.clientY }
+          const deltaPoint = minus(this.downPoint, dragPoint)
+          const point = add(this.cameraPan, deltaPoint)
+          this.lookAt({ ...point, direct: true })
         }
       },
-      initTouch() {
-        this.touch = new Hammer(this.domRef.svg)
-        this.touch.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 0 }))
-        this.touch.add(new Hammer.Press({ time: 0 }))
-        this.touch.on('press', this.svgDown)
+      endDrag() {
+        this.downPoint = null
+        this.lookAtNearestValid()
       },
     },
     computed: {
       ...mapGetters('view', ['viewBoxStr', 'visiblePersons', 'nextPageVisible']),
-    },
-    mounted: function () {
-      this.initDomRef()
-      this.initTouch()
+      ...mapState('view', ['camera']),
     },
     watch: {
       nextPageVisible(value) {
