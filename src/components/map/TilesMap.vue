@@ -33,6 +33,9 @@
 
   const minus = (p1, p2) => ({ x: p1.x - p2.x, y: p1.y - p2.y })
   const add = (p1, p2) => ({ x: p1.x + p2.x, y: p1.y + p2.y })
+  const getPoint = e => e.touches
+    ? { x: e.touches[0].screenX, y: e.touches[0].screenY }
+    : { x: e.screenX, y: e.screenY }
 
   export default {
     name: 'TilesMap',
@@ -46,11 +49,11 @@
       ...mapActions('search', ['loadNextPage']),
       startDrag(e) {
         this.cameraPan = { x: this.camera.panx, y: this.camera.pany }
-        this.downPoint = { x: e.screenX, y: e.screenY }
+        this.downPoint = getPoint(e)
       },
       drag(e) {
         if (this.downPoint) {
-          const dragPoint = { x: e.screenX, y: e.screenY }
+          const dragPoint = getPoint(e)
           const deltaPoint = minus(this.downPoint, dragPoint)
           const point = add(this.cameraPan, deltaPoint)
           this.lookAt({ ...point, direct: true })
