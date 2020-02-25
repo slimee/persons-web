@@ -80,6 +80,7 @@ export default {
       }
     },
     lookAtPerson: ({ dispatch, getters }, { person, row }) => {
+      if (!person) return
       dispatch('lookAt', {
         x: pixelFromDate(person.birth) + Math.min(getters.viewBox.width * 0.5 - 15, pixelFromDay(0.5 * person.age)),
         y: getters.tileY(row),

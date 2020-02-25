@@ -60,6 +60,7 @@ export default {
       }
 
       if (getters.isFirstPage) {
+        await dispatch('persons/clearAll', null, { root: true })
         await dispatch('updateProperty')
         await persons.count(getters.filter)
           .then(count => commit('setTotal', count))

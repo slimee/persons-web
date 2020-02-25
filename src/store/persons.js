@@ -21,6 +21,7 @@ export default {
     setDisplayedDetailledPerson: (state, person) => state.displayedDetailledPerson = person,
   },
   actions: {
+    clearAll: ({ commit }) => commit('setAll', []),
     setAll: ({ commit }, persons) => commit('setAll', persons),
     addAll: ({ commit }, persons) => commit('addAll', persons),
     showPerson: async ({ state, commit, getters }, index) => {
