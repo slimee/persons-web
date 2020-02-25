@@ -1,7 +1,8 @@
 <template>
   <flex-column :class="['search-overview', {'hoverable':!inputing}]">
-    <flex-column v-if="isFiltered" @click="clearFilter" class="clickable no-select">
-      <flex-line class="clickable">
+    <div v-if="firstLoading">chargement...</div>
+    <flex-column v-else-if="isFiltered" @click="clearFilter" class="clickable no-select">
+      <flex-line class="clickable space-right">
         <spacer/>
         <span>{{total}} personne{{plural(total)}}</span>
         <spacer/>
@@ -45,7 +46,7 @@
     computed: {
       ...mapState('properties', { props: 'results' }),
       ...mapState('search', ['total']),
-      ...mapGetters('search', ['isFiltered', 'filterIcon', 'filterLabel']),
+      ...mapGetters('search', ['firstLoading', 'isFiltered', 'filterIcon', 'filterLabel']),
     },
     methods: {
       ...mapActions('search', ['clearFilter', 'search']),
@@ -114,5 +115,9 @@
 
   .autocompletion-list {
     width: 288px;
+  }
+
+  .space-right {
+    margin-right: 2em;
   }
 </style>

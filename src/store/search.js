@@ -35,7 +35,6 @@ export default {
   },
   actions: {
     clearFilter({ dispatch }) {
-      console.log("clear")
       dispatch('search', {})
     },
     searchOnProp({ dispatch }, prop) {
@@ -86,12 +85,15 @@ export default {
           .get(getters.filter.pid)
           .then(p => commit('setProperty', p))
       } else if (getters.filter.n) {
-        const p = { type: 'Nom', title: this.filter.n }
+        const p = { type: 'Nom', title: getters.filter.n }
         commit('setProperty', p)
       }
     },
   },
   getters: {
+    firstLoading(state, getters) {
+      return getters.isFirstPage && state.loading
+    },
     isFirstPage(state) {
       return state.currentPage === 0
     },
