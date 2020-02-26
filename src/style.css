@@ -54,15 +54,12 @@ text {
 
     --layout-color: rgba(200, 200, 200, 0.5);
 
-    --future-color: #228CDB;
-    --future-color2: #1d77ba;
+    --present-color: #1d77ba;
     --grid-color: #ececec;
     --grid-width: 1px;
-    --grid-present-line-color: var(--future-color2);
+    --grid-present-line-color: var(--present-color);
     --grid-present-line-width: 1px;
-    --grid-present-dash-array: none;
-    --grid-future-rect-color: var(--future-color);
-    --grid-future-rect-opacity: 0.5;
+    --grid-present-dash-array: 5px 5px;
 
     --overview-radius: var(--radius);
     --overview-padding: 0.3em;
@@ -103,8 +100,7 @@ text {
     --outside-border-color: #8e7343;
     --overview-border: none;
     --search-overview-border: none;
-    --future-color: #10466e;
-    --future-color2: #0e3e61;
+    --present-color: #0e3e61;
     --panel-border: 1px solid var(--tile-border-color);
     --panel-shadow-color: #444;
     --layout-color: rgba(25, 25, 25, 0.8);
