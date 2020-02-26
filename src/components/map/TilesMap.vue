@@ -13,7 +13,7 @@
             :row="row"
     />
 
-    <present-future-lines/>
+    <present-line/>
 
     <indications/>
 
@@ -27,7 +27,7 @@
   import Timeline from '../timeline/Timeline'
   import IndicateTile from './IndicationTile'
   import VerticalLines from './lines/VerticalLines'
-  import PresentFutureLines from './lines/PresentFutureLines'
+  import PresentLine from './lines/PresentLine'
   import Indications from './Indications'
   import { mapActions, mapGetters, mapState } from 'vuex'
 
@@ -39,7 +39,7 @@
 
   export default {
     name: 'TilesMap',
-    components: { Indications, PresentFutureLines, VerticalLines, IndicateTile, Timeline, PersonTile },
+    components: { Indications, PresentLine, VerticalLines, IndicateTile, Timeline, PersonTile },
     data: () => ({
       downPoint: null,
       cameraPan: null,

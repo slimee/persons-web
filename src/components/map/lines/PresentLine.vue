@@ -1,6 +1,6 @@
 <template>
   <line
-          class="grid-present-line"
+          class="present-line"
           :x1="nowX" :x2="nowX" :y1="viewBox.y" :y2="viewBox.bottom"
   ></line>
 </template>
@@ -10,7 +10,7 @@
   import { mapGetters } from 'vuex'
 
   export default {
-    name: 'PresentFutureLines',
+    name: 'PresentLine',
     data: () => ({
       nowX: pixelFromDate(new Date()) - 2,
     }),
@@ -21,7 +21,7 @@
 </script>
 
 <style scoped>
-  .grid-present-line {
+  .present-line {
     stroke: var(--grid-present-line-color);
     stroke-width: var(--grid-present-line-width);
     stroke-dasharray: var(--grid-present-dash-array);

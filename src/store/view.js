@@ -22,6 +22,7 @@ export default {
       panx: pixelFromDate(new Date()),
       pany: null,
     },
+    bigDateWidth: 60,
     maxX: nowPixel,
     window: {
       width: null,
@@ -157,7 +158,7 @@ export default {
     tileY: (state, getters) => row => (getters.rowBox.begin + row) * tileHeightPlusGap,
     centuries: (state, getters) => grid(
       yearFromPixel(getters.viewBox.x),
-      yearFromPixel(getters.viewBox.right),
+      Math.min(yearFromPixel(getters.viewBox.right), new Date().getFullYear()),
       100,
     ).map(pixelFromYear),
     nextPagePoint(state, getters, rootState) {

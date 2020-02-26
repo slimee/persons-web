@@ -20,6 +20,7 @@
     <timeline-big-date
             :x="viewBox.x+viewBox.width-bigDateWidth*0.5" :width="bigDateWidth"
             :y="ruban.y" :height="ruban.height"
+            :max-year="new Date().getFullYear()"
     />
 
     <rect class="ruban-front"
@@ -33,7 +34,7 @@
   import TimelineSmallDate from './TimelineSmallDate'
   import TimelineBigDate from './TimelineBigDate'
   import { dateFromPixel } from '../../services/utils'
-  import { mapActions, mapGetters } from 'vuex'
+  import { mapActions, mapGetters, mapState } from 'vuex'
 
   export default {
     name: 'Timeline',
@@ -50,10 +51,8 @@
       margin: 15,
     }),
     computed: {
+      ...mapState('view', ['bigDateWidth']),
       ...mapGetters('view', ['viewBox', 'centuries']),
-      bigDateWidth() {
-        return 60
-      },
       ruban() {
         return {
           x: this.viewBox.x - 1,

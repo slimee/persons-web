@@ -8,15 +8,15 @@
         <stop offset="100%" class="stop-color" stop-opacity="0"></stop>
       </linearGradient>
     </defs>
-    <rect :x="x-width" :y="y" :width="width*2" :height="height" class="backgroundRect"></rect>
+    <rect :x="effectiveX-width" :y="y" :width="width*2" :height="height" class="backgroundRect"></rect>
 
-    <text class="timelineBigText" :x="x" :y="y+height*0.5">{{formattedDate}}</text>
+    <text class="timelineBigText" :x="effectiveX" :y="y+height*0.5">{{formattedDate}}</text>
 
   </g>
 </template>
 
 <script>
-  import { dateFromPixel } from '../../services/utils'
+  import { dateFromPixel, pixelFromYear } from '../../services/utils'
 
   export default {
     name: 'TimelineBigDate',
@@ -25,10 +25,16 @@
       y: Number,
       width: Number,
       height: Number,
+      maxYear: Number,
     },
     computed: {
+      effectiveX: function () {
+        if (this.maxYear === undefined) return this.x
+        if (this.maxYear < dateFromPixel(this.x)) return pixelFromYear(this.maxYear)
+        return this.x
+      },
       date: function () {
-        return dateFromPixel(this.x)
+        return dateFromPixel(this.effectiveX)
       },
       formattedDate: function () {
         return this.date.getFullYear()
