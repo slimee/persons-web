@@ -15,6 +15,10 @@ html, body {
     height: 100%;
 }
 
+input, select, textarea {
+    color: var(--font-color);
+}
+
 text {
     fill: var(--font-color);
     transition: fill var(--transition-speed);
@@ -131,8 +135,8 @@ a {
     display: flex;
 
     line-height: 1em;
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding-top: 0;
+    padding-bottom: 0;
     padding-left: 5px;
     padding-right: 5px;
 }
@@ -192,14 +196,12 @@ a {
 .column {
     display: flex;
     flex-direction: column;
-    flex-basis: 100%;
     flex: 1;
 }
 
 .no-select {
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
     -moz-user-select: none; /* Old versions of Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none;
