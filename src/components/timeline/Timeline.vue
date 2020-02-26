@@ -20,7 +20,7 @@
     <timeline-big-date
             :x="viewBox.x+viewBox.width-bigDateWidth*0.5" :width="bigDateWidth"
             :y="ruban.y" :height="ruban.height"
-            :max-year="new Date().getFullYear()"
+            :max-date="new Date()"
     />
 
     <rect class="ruban-front"

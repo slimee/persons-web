@@ -16,7 +16,7 @@
 </template>
 
 <script>
-  import { dateFromPixel, pixelFromYear } from '../../services/utils'
+  import { dateFromPixel, pixelFromDate } from '../../services/utils'
 
   export default {
     name: 'TimelineBigDate',
@@ -25,12 +25,12 @@
       y: Number,
       width: Number,
       height: Number,
-      maxYear: Number,
+      maxDate: Number,
     },
     computed: {
       effectiveX: function () {
-        if (this.maxYear === undefined) return this.x
-        if (this.maxYear < dateFromPixel(this.x)) return pixelFromYear(this.maxYear)
+        if (this.maxDate === undefined) return this.x
+        if (this.maxDate < dateFromPixel(this.x)) return pixelFromDate(this.maxDate)
         return this.x
       },
       date: function () {
