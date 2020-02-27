@@ -3,20 +3,19 @@ import properties from '../services/properties'
 export default {
   namespaced: true,
   state: {
-    all: [],
     term: null,
     results: [],
-    pageSize: 12,
+    pageSize: 30,
     currentPage: null,
   },
   mutations: {
-    init(state, properties) {
-      state.all = properties
-    },
     initSearch(state, term) {
       state.term = term
       state.currentPage = -1
       state.results = []
+    },
+    setResults(state, results) {
+      state.results = results
     },
     appendResults(state, results) {
       state.results.push(...results)
@@ -26,24 +25,26 @@ export default {
     },
   },
   actions: {
-    async init({ commit }) {
-      commit('init', await properties.find())
-    },
     clear({ commit }) {
       commit('initSearch')
     },
-    search({ commit, state, dispatch }, term) {
+    async search({ commit, state, dispatch }, term) {
       commit('initSearch', term)
       if (term && term.length >= 2) {
-        dispatch('nextPage')
+        await dispatch('nextPage')
       }
     },
-    nextPage({ commit, state }) {
+    async nextPage({ commit, state }) {
       commit('setCurrentPage', state.currentPage + 1)
-      const results = state.all
-        .filter(prop => prop.title.indexOf(state.term) !== -1)
-        .slice(state.currentPage * state.pageSize, state.pageSize)
-      commit('appendResults', results)
+
+      const filter = {
+        n: state.term,
+        ps: state.pageSize,
+        pn: state.currentPage,
+      }
+      const results = await properties.find(filter)
+
+      commit('setResults', results)
     },
   },
   getters: {},

@@ -10,7 +10,6 @@ export default {
     async mount({ dispatch }) {
       await dispatch('layout/darkFromStorage', null, { root: true })
       await dispatch('tween/init', null, { root: true })
-      await dispatch('properties/init', null, { root: true })
     },
   },
   getters: {},

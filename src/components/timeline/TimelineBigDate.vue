@@ -25,7 +25,7 @@
       y: Number,
       width: Number,
       height: Number,
-      maxDate: Number,
+      maxDate: Date,
     },
     computed: {
       effectiveX: function () {
