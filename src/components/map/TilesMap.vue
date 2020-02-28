@@ -61,7 +61,6 @@
       },
       endDrag() {
         this.downPoint = null
-        this.lookAtNearestValid()
       },
     },
     computed: {
