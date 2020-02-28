@@ -2,13 +2,7 @@
   <flex-column :class="['search-overview', {'hoverable':!inputing}]">
     <div v-if="firstLoading">chargement...</div>
     <flex-column v-else-if="isFiltered" @click="clearFilter" class="clickable no-select">
-      <flex-line class="clickable space-right">
-        <spacer/>
-        <span>{{total}} personne{{plural(total)}}</span>
-        <spacer/>
-        <div class="rnd-large close panel-top-right">×</div>
-      </flex-line>
-      <flex-line>{{filterIcon}} {{filterLabel}}</flex-line>
+      <flex-line class="space-right">{{filterIcon}} {{filterLabel}} ({{total}})</flex-line>
     </flex-column>
     <flex-line v-else>
       <div @mousedown.prevent @click="btnClick" class="icon clickable no-select">🔍</div>
@@ -33,7 +27,6 @@
   import { getLogo } from '../../services/properties'
   import FlexLine from '../layout/FlexLine'
   import FlexColumn from '../layout/FlexColumn'
-  import { plural } from '../../services/utils'
   import Spacer from '../layout/Spacer'
 
   export default {
@@ -51,7 +44,7 @@
     methods: {
       ...mapActions('search', ['clearFilter', 'search']),
       ...mapActions('properties', { clearProp: 'clear', searchProp: 'search' }),
-      getLogo, plural,
+      getLogo,
       btnClick() {
         if (this.inputing) {
           this.doSearch()
