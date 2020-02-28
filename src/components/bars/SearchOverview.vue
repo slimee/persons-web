@@ -2,7 +2,10 @@
   <flex-column :class="['search-overview', {'hoverable':!inputing}]">
     <div v-if="firstLoading">chargement...</div>
     <flex-column v-else-if="isFiltered" @click="clearFilter" class="clickable no-select">
-      <flex-line class="space-right">{{filterIcon}} {{filterLabel}} ({{total}})</flex-line>
+      <flex-line>
+        <span>{{filterIcon}} {{filterLabel}} ({{total}})</span>
+        <div class="rnd-large close">×</div>
+      </flex-line>
     </flex-column>
     <flex-line v-else>
       <div @mousedown.prevent @click="btnClick" class="icon clickable no-select">🔍</div>
