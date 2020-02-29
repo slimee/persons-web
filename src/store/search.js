@@ -44,6 +44,7 @@ export default {
     search({ commit }, filter) {
       commit('resetTotal')
       commit('initCurrentPage')
+      dispatch('persons/hidePerson', null, { root:true }) 
       router
         .push({ name: 'PersonTimeline', query: filter })
         .catch(() => {
