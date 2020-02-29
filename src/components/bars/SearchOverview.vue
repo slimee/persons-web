@@ -46,7 +46,6 @@
     },
     methods: {
       ...mapActions('search', ['clearFilter', 'search']),
-      ...mapActions('persons', ['hidePerson']),
       ...mapActions('properties', { clearProp: 'clear', searchProp: 'search' }),
       getLogo,
       btnClick() {
@@ -55,7 +54,6 @@
         } else {
           this.inputing = true
           this.$nextTick(() => this.$refs.searchInput.focus())
-          this.hidePerson()
         }
       },
       clear() {
