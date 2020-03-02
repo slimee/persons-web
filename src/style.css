@@ -77,6 +77,7 @@ text {
     --timeline-border-color: var(--black);
 
     --transition-speed: .3s;
+    --transition-very-speed: .1s;
 
     --img-max-width: 250px;
     --img-max-height: 250px;

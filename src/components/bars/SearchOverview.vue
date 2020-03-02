@@ -16,11 +16,13 @@
              @blur="blur" @input="inputChange"
       />
     </flex-line>
-    <list v-if="props.length" class="autocompletion-list" :items="props" @click="listItemClick">
-      <template #item="{item}">
-        {{getLogo(item.type)}} {{item.title}}
-      </template>
-    </list>
+    <perfect-scrollbar :style="scrollBarStyle">
+      <list v-if="props.length" class="autocompletion-list" :items="props" @click="listItemClick">
+        <template #item="{item}">
+          {{getLogo(item.type)}} {{item.title}}
+        </template>
+      </list>
+    </perfect-scrollbar>
   </flex-column>
 </template>
 
@@ -30,11 +32,11 @@
   import { getLogo } from '../../services/properties'
   import FlexLine from '../layout/FlexLine'
   import FlexColumn from '../layout/FlexColumn'
-  import Spacer from '../layout/Spacer'
+  import { PerfectScrollbar } from 'vue2-perfect-scrollbar'
 
   export default {
     name: 'SearchOverview',
-    components: { Spacer, FlexColumn, FlexLine, List },
+    components: { PerfectScrollbar, FlexColumn, FlexLine, List },
     data: () => ({
       inputing: false,
       value: null,
@@ -43,6 +45,15 @@
       ...mapState('properties', { props: 'results' }),
       ...mapState('search', ['total']),
       ...mapGetters('search', ['firstLoading', 'isFiltered', 'filterIcon', 'filterLabel']),
+      scrollBarStyle() {
+        const x = 15
+        const a = this.props.length
+        const height = Math.min(255, a * x)
+        return {
+          height: height + 'px',
+          transition: 'height var(--transition-very-speed)',
+        }
+      },
     },
     methods: {
       ...mapActions('search', ['clearFilter', 'search']),

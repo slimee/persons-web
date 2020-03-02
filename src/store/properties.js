@@ -5,7 +5,7 @@ export default {
   state: {
     term: null,
     results: [],
-    pageSize: 30,
+    pageSize: 60,
     currentPage: null,
   },
   mutations: {

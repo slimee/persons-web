@@ -8,7 +8,9 @@
         <div class="panelImg">
           <img v-if="imgUrl" class="person-img" :src="imgUrl" @load="onImgLoad"/>
           <div v-html="label" class="label"></div>
-          <p v-html="intro" class="intro"></p>
+          <perfect-scrollbar style="height: 100px">
+            <p v-html="intro" class="intro"></p>
+          </perfect-scrollbar>
         </div>
 
         <div v-if="tabs" class='row properties'>
@@ -44,9 +46,11 @@
   import { groupBy, isPerson } from '../../services/utils'
   import { mapActions, mapState } from 'vuex'
   import { getLogo } from '../../services/properties'
+  import { PerfectScrollbar } from 'vue2-perfect-scrollbar'
 
   export default {
     name: 'PersonPanel',
+    components: { PerfectScrollbar },
     data: () => ({
       currentPropertyKey: null,
       imgLoaded: false,
@@ -141,6 +145,7 @@
 </script>
 
 <style scoped>
+
   .properties {
     margin-top: 1em;
     display: flex;
@@ -154,7 +159,6 @@
   }
 
   .intro {
-    max-height: 105px;
     overflow-y: hidden;
     margin: 1em 0 0 0;
   }

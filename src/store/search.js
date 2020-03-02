@@ -41,10 +41,11 @@ export default {
       dispatch('persons/hidePerson', null, { root: true })
       dispatch('search', { pid: prop._id })
     },
-    search({ commit }, filter) {
+    search({ commit, dispatch }, filter) {
       commit('resetTotal')
       commit('initCurrentPage')
-      dispatch('persons/hidePerson', null, { root:true }) 
+      dispatch('persons/hidePerson', null, { root: true })
+      dispatch('view/lookAt', { y: 0 }, { root: true })
       router
         .push({ name: 'PersonTimeline', query: filter })
         .catch(() => {
