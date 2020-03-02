@@ -12,6 +12,8 @@ export default {
     initSearch(state, term) {
       state.term = term
       state.currentPage = -1
+    },
+    clearResults(state) {
       state.results = []
     },
     setResults(state, results) {
@@ -26,7 +28,7 @@ export default {
   },
   actions: {
     clear({ commit }) {
-      commit('initSearch')
+      commit('clearResults')
     },
     async search({ commit, state, dispatch }, term) {
       commit('initSearch', term)

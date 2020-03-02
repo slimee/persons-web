@@ -46,7 +46,7 @@
       ...mapState('search', ['total']),
       ...mapGetters('search', ['firstLoading', 'isFiltered', 'filterIcon', 'filterLabel']),
       scrollBarStyle() {
-        const x = 15
+        const x = 25
         const a = this.props.length
         const height = Math.min(255, a * x)
         return {
