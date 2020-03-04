@@ -31,8 +31,7 @@
           <div class='column property-values'>
             <div class="row">
               <template v-for="(propertyValue,i) in currentPropertyValues">
-                <div @click="select(propertyValue)" class="clickable hoverable">{{clearValue(propertyValue.title, i)}}&nbsp;
-                </div>
+                <div @click="select(propertyValue)" class="clickable hoverable">{{clearValue(propertyValue.title, i)}}&nbsp;</div>
               </template>
             </div>
           </div>

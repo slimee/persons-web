@@ -33,9 +33,6 @@
     components: { IndicateTile },
     methods: {
       ...mapActions('view', ['lookAtIndex']),
-      tileY(row) {
-        return (this.rowBox.begin + row) * tileHeightPlusGap + tileHeight * 0.5
-      },
       makeOutsideRightPerson(row) {
         const person = this.persons[row]
         return {
@@ -58,6 +55,7 @@
     },
     computed: {
       ...mapGetters('view', { viewBox: 'viewBox', persons: 'visiblePersons', rowBox: 'rowBox' }),
+      ...mapGetters('view', ['tileY']),
       hasPersons() {
         return this.persons && this.persons.length > 0
       },
@@ -66,18 +64,25 @@
       },
       outsideRight: function () {
         if (this.hasPersons) {
-          return this.allAreOutsideRight || this.outsideRightPersons
+          // return this.allAreOutsideRight || this.outsideRightPersons
+          return this.outsideRightPersons
         }
       },
       outsideLeft: function () {
         if (this.hasPersons) {
-          return this.allAreOutsideLeft || this.outsideLeftPersons
+          // return this.allAreOutsideLeft || this.outsideLeftPersons
+          return this.outsideLeftPersons
         }
       },
       allAreOutsideLeft: function () {
+        let result = null
         const viewBoxLeftYear = yearFromPixel(this.viewBox.left - indicationLeftMargin)
-        return this.persons[this.lastPersonIndex].birthYear < viewBoxLeftYear
-          && this.makeOutsideRightPerson(this.lastPersonIndex)
+        const lastPersonBirth = this.persons[this.lastPersonIndex].birthYear
+        if (lastPersonBirth < viewBoxLeftYear) {
+          result = this.makeOutsideLeftPerson(this.lastPersonIndex)
+          console.log(result)
+        }
+        return result
       },
       outsideLeftPersons: function () {
         const viewBoxLeftYear = yearFromPixel(this.viewBox.left - indicationLeftMargin)
