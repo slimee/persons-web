@@ -64,13 +64,14 @@ export default {
       if (getters.isFirstPage) {
         await dispatch('persons/clearAll', null, { root: true })
         await dispatch('updateProperty')
-        await persons.count(getters.filter)
-          .then(count => commit('setTotal', count))
-        await persons.find(filter)
-          .then(persons => {
-            dispatch('persons/setAll', persons, { root: true })
-            commit('setLoading', false)
-          })
+        await Promise.all([
+          persons.count(getters.filter)
+            .then(count => commit('setTotal', count)),
+          persons.find(filter)
+            .then(persons => {
+              dispatch('persons/setAll', persons, { root: true })
+              commit('setLoading', false)
+            })])
       } else {
         await persons.find(filter)
           .then(persons => {

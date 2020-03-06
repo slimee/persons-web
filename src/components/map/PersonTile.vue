@@ -28,14 +28,7 @@
 
 
 <script>
-  import {
-    dateFromDay,
-    dayFromPixel,
-    dayFromYearAvg,
-    pixelFromDay,
-    tileHeight,
-    tileMargin,
-  } from '../../services/utils'
+  import { dateFromDay, dayFromPixel, tileHeight, tileMargin } from '../../services/utils'
   import { mapActions, mapGetters } from 'vuex'
 
   export default {
@@ -60,9 +53,7 @@
         return this.tileY(this.row)
       },
       width: function () {
-        return pixelFromDay(
-          this.person.age > 0 ? this.person.age : dayFromYearAvg(100),
-        )
+        return this.person.widthPixel
       },
       warningDeath: function () {
         return this.person.unknownDeath && '❓'

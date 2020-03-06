@@ -14,6 +14,7 @@ export const toAll = fct => array => {
   return array
 }
 export const tileHeight = 30
+export const tileHeightHalf = tileHeight * 0.5
 export const tileMargin = 5
 export const tileGap = 7
 export const tileHeightPlusGap = tileHeight + tileGap
@@ -27,7 +28,6 @@ export const groupBy = (xs, key) =>
   }, {})
 
 
-export const plural = number => number > 1 ? 's' : ''
 export const floor = (value, width) => Math.floor(value / width) * width
 export const ceil = (value, width) => Math.ceil(value / width) * width
 export const grid = (from, to, width) => {
@@ -49,6 +49,6 @@ export const mergePersonInPersons = (person, persons) => {
 }
 export const largeViewBoxHorizontalMargin = 2000
 export const largeViewBoxVerticalMargin = 300
-export const indicationRightMargin = 40
-export const indicationLeftMargin = 40
+export const indicationRightMargin = 60
+export const indicationLeftMargin = 15
 export const rowFromPixel = pixel => Math.floor(pixel / tileHeightPlusGap)

@@ -1,4 +1,4 @@
-import { dayFromDate, dayFromYearAvg, pixelFromDate, toAll } from './utils'
+import { dayFromDate, dayFromYearAvg, pixelFromDate, pixelFromDay, toAll } from './utils'
 import { paramsOf } from './api'
 
 const api = require('./api')
@@ -36,6 +36,8 @@ const deserialize = (person) => {
     person.unknownDeath = true
   }
   person.birthPixel = pixelFromDate(person.birth)
+  person.widthPixel = pixelFromDay(person.age > 0 ? person.age : dayFromYearAvg(100))
+  person.deathPixel = person.birthPixel + person.widthPixel
   return person
 }
 

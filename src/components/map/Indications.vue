@@ -21,8 +21,7 @@
     indicationLeftMargin,
     indicationRightMargin,
     tileGap,
-    tileHeight,
-    tileHeightPlusGap,
+    tileHeightHalf,
     yearFromPixel,
   } from '../../services/utils'
   import IndicateTile from './IndicationTile'
@@ -39,7 +38,7 @@
           text: person.name,
           index: row,
           x: Math.min(this.viewBox.right, person.birthPixel) - tileGap,
-          y: this.tileY(row),
+          y: this.tileY(row) + tileHeightHalf,
         }
       },
       makeOutsideLeftPerson(row) {
@@ -47,8 +46,8 @@
         return {
           text: person.name,
           index: row,
-          x: this.viewBox.x,
-          y: this.tileY(row),
+          x: this.viewBox.x + tileGap,
+          y: this.tileY(row) + tileHeightHalf,
           angle: 180,
         }
       },
@@ -63,51 +62,26 @@
         return this.hasPersons && this.persons.length - 1
       },
       outsideRight: function () {
-        if (this.hasPersons) {
-          // return this.allAreOutsideRight || this.outsideRightPersons
-          return this.outsideRightPersons
-        }
+        return this.hasPersons && this.outsideRightPersons
       },
       outsideLeft: function () {
-        if (this.hasPersons) {
-          // return this.allAreOutsideLeft || this.outsideLeftPersons
-          return this.outsideLeftPersons
-        }
-      },
-      allAreOutsideLeft: function () {
-        let result = null
-        const viewBoxLeftYear = yearFromPixel(this.viewBox.left - indicationLeftMargin)
-        const lastPersonBirth = this.persons[this.lastPersonIndex].birthYear
-        if (lastPersonBirth < viewBoxLeftYear) {
-          result = this.makeOutsideLeftPerson(this.lastPersonIndex)
-          console.log(result)
-        }
-        return result
+        return this.hasPersons && this.outsideLeftPersons
       },
       outsideLeftPersons: function () {
         const viewBoxLeftYear = yearFromPixel(this.viewBox.left - indicationLeftMargin)
-        const firstThirdX = yearFromPixel(this.viewBox.firstThirdX)
         for (let i = this.lastPersonIndex; i >= 0; i--) {
-          if (this.persons[i].birthYear < viewBoxLeftYear) {
-            if (this.persons[i + 1].birthYear > firstThirdX) {
-              return this.makeOutsideLeftPerson(i)
-            }
+          const currentBirthYear = this.persons[i].birthYear
+          if (currentBirthYear < viewBoxLeftYear) {
+            return this.makeOutsideLeftPerson(i)
           }
         }
       },
-      allAreOutsideRight: function () {
-        const viewBoxRightYear = yearFromPixel(this.viewBox.right - indicationRightMargin)
-        return this.persons[0].birthYear > viewBoxRightYear
-          && this.makeOutsideRightPerson(0)
-      },
       outsideRightPersons: function () {
         const viewBoxRightYear = yearFromPixel(this.viewBox.right - indicationRightMargin)
-        const secondThirdX = yearFromPixel(this.viewBox.secondThirdX)
         for (let i = 0; i <= this.lastPersonIndex; i++) {
-          if (viewBoxRightYear < this.persons[i].birthYear) {
-            if (this.persons[i - 1].birthYear < secondThirdX) {
-              return this.makeOutsideRightPerson(i)
-            }
+          const currentBirthYear = this.persons[i].birthYear
+          if (viewBoxRightYear < currentBirthYear) {
+            return this.makeOutsideRightPerson(i)
           }
         }
       },

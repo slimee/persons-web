@@ -117,10 +117,8 @@ export default {
       const centerY = s.camera.pany
       const right = x + width
       const bottom = y + height
-      const firstThirdX = x + (width * 0.33334)
-      const secondThirdX = x + (width * 0.66667)
       return {
-        left, top, x, y, centerX, centerY, width, height, right, bottom, firstThirdX, secondThirdX,
+        left, top, x, y, centerX, centerY, width, height, right, bottom,
       }
     },
     viewBoxStr: (state, getters) => {
