@@ -56,34 +56,18 @@
     }),
     methods: {
       ...mapActions('persons', ['hidePerson']),
-      ...mapActions('search', ['searchOnProp']),
+      ...mapActions('search', ['searchOnProp', 'search']),
       charOf: getLogo,
       close() {
         this.hidePerson()
       },
       select(item) {
-        if (isPerson(item)) {
-          // this.openPersonFromProperty(item)
+        if (isPerson(item) && item.title) {
+          this.search({ n: item.title })
         } else {
           this.searchOnProp(item)
         }
       },
-      // openPersonFromProperty(property) {
-      //   property.personId
-      //   && this.openPersonFromId(property.personId)
-      //   || console.log('no personId')
-      // },
-      // async openPersonFromId(_id) {
-      //   this.selectTile(null)
-      //   this.showPerson(null)
-      //   let index = this.allPersons.findIndex(p => p._id === _id)
-      //   if (index === -1) {
-      //     const person = await persons.get(_id)
-      //     index = mergePersonInPersons(person, this.allPersons)
-      //   }
-      //   this.selectTile(index)
-      //   this.showPerson(index)
-      // },
       clearValue(value, i) {
         const result = value.indexOf('en:') === 0 ? value.substring(3) : value
         return i + 1 < this.currentPropertyValues.length ? `${result},` : result

@@ -41,14 +41,10 @@ export const grid = (from, to, width) => {
 }
 const personProperties = ['Enfant', 'Influencé par', 'A influencé']
 export const isPerson = property => !!personProperties.includes(property.type)
-export const mergePersonInPersons = (person, persons) => {
-  let index = persons.findIndex(p => p.birth > person.birth)
-  index = index === -1 ? 0 : index
-  persons.splice(index, 0, person)
-  return index
-}
 export const largeViewBoxHorizontalMargin = 2000
 export const largeViewBoxVerticalMargin = 300
 export const indicationRightMargin = 60
 export const indicationLeftMargin = 15
+export const indicationBottomMargin = 70
+export const indicationTopMargin = 30
 export const rowFromPixel = pixel => Math.floor(pixel / tileHeightPlusGap)

@@ -18,8 +18,9 @@
 
 <script>
   import {
+    indicationBottomMargin,
     indicationLeftMargin,
-    indicationRightMargin,
+    indicationRightMargin, indicationTopMargin,
     tileGap,
     tileHeightHalf,
     yearFromPixel,
@@ -47,7 +48,7 @@
           text: person.name,
           index: row,
           x: this.viewBox.x + tileGap,
-          y: this.tileY(row) + tileHeightHalf,
+          y: Math.max(Math.min(this.tileY(row) + tileHeightHalf, this.viewBox.bottom - indicationBottomMargin), this.viewBox.top + indicationTopMargin),
           angle: 180,
         }
       },
