@@ -42,7 +42,7 @@
 </template>
 
 <script>
-  import { groupBy, isPerson } from '../../services/utils'
+  import { groupBy, isExternalLink, isPerson, wikiUrl } from '../../services/utils'
   import { mapActions, mapState } from 'vuex'
   import { getLogo } from '../../services/properties'
   import { PerfectScrollbar } from 'vue2-perfect-scrollbar'
@@ -62,7 +62,9 @@
         this.hidePerson()
       },
       select(item) {
-        if (isPerson(item) && item.title) {
+        if (isExternalLink(item)) {
+          window.open(wikiUrl(item.href))
+        } else if (isPerson(item) && item.title) {
           this.search({ n: item.title })
         } else {
           this.searchOnProp(item)

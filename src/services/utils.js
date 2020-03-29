@@ -1,4 +1,3 @@
-
 export const dayFromDate = date => date.getTime() / (1000 * 60 * 60 * 24)
 export const dateFromDay = day => new Date(day * (1000 * 60 * 60 * 24))
 export const pixelFromDay = day => day / 150
@@ -27,7 +26,6 @@ export const groupBy = (xs, key) =>
     return rv
   }, {})
 
-
 export const floor = (value, width) => Math.floor(value / width) * width
 export const ceil = (value, width) => Math.ceil(value / width) * width
 export const grid = (from, to, width) => {
@@ -41,6 +39,8 @@ export const grid = (from, to, width) => {
 }
 const personProperties = ['Enfant', 'Influencé par', 'A influencé']
 export const isPerson = property => !!personProperties.includes(property.type)
+export const isExternalLink = property => ['Œuvres principales'].includes(property.type)
+export const wikiUrl = path => `https://fr.wikipedia.org${path}`
 export const largeViewBoxHorizontalMargin = 2000
 export const largeViewBoxVerticalMargin = 300
 export const indicationRightMargin = 60
