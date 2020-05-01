@@ -1,21 +1,22 @@
 <template>
-  <flex-line style="align-items: unset">
-    <flex-column class="operator" :class="operatorClass(operation.operator)" @click="operatorClick(operation, parent)">
-      {{operatorLabel(operation.operator)}}
+  <flex-line v-if="isOperation(operation)" style="align-items: unset">
+    <flex-column class="operator" :class="operatorClass(operation)" @click="operatorClick(operation, parent)">
+      {{operatorLabel(operation)}}
     </flex-column>
     <flex-column class="operands">
       <template v-for="operand in operation.operands">
-        <div v-if="operand.label" @click="operandClick(operand, operation)">
+        <operation v-if="isOperation(operand)"
+                   :operation="operand" :parent="operation"
+                   @operatorClick="operatorClick"
+                   @operandClick="operandClick"
+        />
+        <div class="label" v-else @click="operandClick(operand, operation)">
           {{operand.label}}
         </div>
-        <operation v-else-if="operand.operator"
-                  :operation="operand" :parent="operation"
-                  @operatorClick="operatorClick"
-                  @operandClick="operandClick"
-        />
       </template>
     </flex-column>
   </flex-line>
+  <div class="label" v-else>{{operation.label}}</div>
 </template>
 
 <script>
@@ -38,11 +39,15 @@
       operandClick(operand, operation) {
         this.$emit('operandClick', operand, operation)
       },
-      operatorClass(operator) {
-        return operator === operators.AND ? 'and' : 'or'
+      operatorClass(operation) {
+        const andOr = operation.operator === operators.AND ? 'and' : 'or'
+        return operation.operands.length === 1 ? `${andOr} one` : andOr
       },
-      operatorLabel(operator) {
-        return operator === operators.AND ? 'ou' : 'et'
+      operatorLabel({ operator }) {
+        return operator === operators.AND ? 'et' : 'ou'
+      },
+      isOperation(operand) {
+        return operand && operand.operands
       },
     },
   }
@@ -54,18 +59,27 @@
     text-align: center;
     cursor: pointer;
     justify-content: center;
+    transition: all .3s;
+  }
+
+  .label {
+    margin-left: 0.3em;
   }
 
   .operands {
-    margin-left: 0.5em;
     cursor: pointer;
   }
 
   .and {
-    background-color: #2493e6;
+    background-color: #f6db53;
   }
 
   .or {
-    background-color: #eebe7b;
+    background-color: #84DCC6;
+  }
+
+  .one {
+    width: 1em;
+    opacity: 50%;
   }
 </style>

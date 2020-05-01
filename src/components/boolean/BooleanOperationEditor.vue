@@ -1,13 +1,9 @@
 <template>
-  <div>
-    <operation :operation="operation"
-               @operandClick="operandClick"
-               @operatorClick="operatorClick"
-    />
-    <textarea class="text-area">
-      {{JSON.stringify(operation, null, 2)}}
-    </textarea>
-  </div>
+  <flex-column>
+    <operation :operation="operation" @operandClick="operandClick" @operatorClick="operatorClick"/>
+    <input type="text" v-model="inputText" v-on:keyup.enter="addInputText"/>
+    <textarea class="text-area">{{JSON.stringify(operation, null, 2)}}</textarea>
+  </flex-column>
 </template>
 
 <script>
@@ -25,25 +21,30 @@
     },
     data: () => (
       {
-        operation: {
-          operator: AND,
-          operands: [
-            { label: 'two' },
-            { label: 'three' },
-            { operator: OR, operands: [{ label: 'one' }] },
-          ],
-        },
+        inputText: '',
+        operation: null,
       }
     ),
-    mounted() {
-    },
-    watch: {},
     methods: {
-      operatorClick(operation, parent) {
-        const isRootOperation = !parent
-        if (isRootOperation) this.switchOperators(operation)
-        else this.pullUpOperandsFrom(operation, parent)
+      addInputText() {
+        const newOperand = { label: this.inputText }
+        if (this.isOperation(this.operation)) this.operation.operands.push(newOperand)
+        else if (this.operation) this.operation = { operator: AND, operands: [this.operation, newOperand] }
+        else this.operation = newOperand
+        this.inputText = ''
       },
+      operatorClick(operation, parent) {
+        if (parent) this.pullUpOperandsFrom(operation, parent)
+        else this.switchOperators(operation)
+      },
+      operandClick(operand, operation) {
+        if (operation.operands.length === 1) this.pullUpOperandsFrom(operand, operation)
+
+        const brotherOperation = this.findBrotherOperation(operand, operation)
+        if (brotherOperation) this.moveOperandFromParentToBrotherOperation(operand, operation, brotherOperation)
+        else this.createOperation(operand, operation)
+      },
+
       switchOperators(operation) {
         if (!this.isOperation(operation)) return
         operation.operator = this.getOppositeOf(operation.operator)
@@ -53,29 +54,18 @@
         const groupIndex = parentOperation.operands.indexOf(childOperation)
         parentOperation.operands.splice(groupIndex, 1, ...childOperation.operands)
       },
-
-      operandClick(operand, operation) {
-        if (operation.operands.length === 1) this.pullUpOperandsFrom(operand, operation)
-        const closerOperation = this.findOperationToAddOperand(operand, operation)
-        if (!closerOperation) this.createGroup(operand, operation)
-        else this.moveOperandFromParentToBrotherOperation(operand, operation, closerOperation)
-      },
-      findOperationToAddOperand(operand, { operands }) {
+      findBrotherOperation(operand, { operands }) {
         const operandIndex = operands.indexOf(operand)
-        if (this.isOperationAtIndexIn(operandIndex + 1, operands)) return operands[operandIndex + 1]
-        else if (this.isOperationAtIndexIn(operandIndex - 1, operands)) return operands[operandIndex - 1]
-      },
-      isOperationAtIndexIn(index, operands) {
-        if (index < 0) return null
-        if (index > operands.length - 1) return null
-        return this.isOperation(operands[index])
+        if (this.isOperation(operands[operandIndex + 1])) return operands[operandIndex + 1]
+        else if (this.isOperation(operands[operandIndex - 1])) return operands[operandIndex - 1]
       },
       isOperation(operand) {
-        return operand.operands
+        return operand && operand.operands
       },
-      createGroup(operand, operation) {
-        const { operator, operands } = operation
-        const newGroup = { operator: this.getOppositeOf(operator), operands: [operand] }
+      createOperation(operand, operation) {
+        const { operator: parentOperator, operands } = operation
+        const operator = this.getOppositeOf(parentOperator)
+        const newGroup = { operator, operands: [operand] }
         const operandIndex = operands.indexOf(operand)
         operands.splice(operandIndex, 1, newGroup)
       },
