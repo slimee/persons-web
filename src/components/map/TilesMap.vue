@@ -1,8 +1,8 @@
 <template>
   <svg id="surface" ref="surface" class="surface no-select" :viewBox="viewBoxStr" style="pointer-events: all"
-       v-touch:start="startDrag"
-       v-touch:moving="drag"
-       v-touch:end="endDrag"
+         v-touch:start="startDrag"
+         v-touch:moving="drag"
+         v-touch:end="endDrag"
   >
 
     <VerticalLines/>
