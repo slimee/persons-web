@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import App from './App.vue'
-import Boolean from './Boolean.vue'
 import router from './plugins/router'
 import store from './plugins/store'
 import vuexRouterSync from './plugins/vuex-router-sync'
@@ -14,6 +13,5 @@ new Vue({
   el: '#app',
   router,
   store,
-   // render: h => h(App),
- render: h => h(Boolean)
+   render: h => h(App),
 })
