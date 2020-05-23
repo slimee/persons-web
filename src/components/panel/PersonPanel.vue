@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div v-if="person" v-show="imgLoaded || !imgUrl" class="layout" @click.self="close">
+    <div v-show="show" class="layout" @click.self="close">
       <div class="panel row-if-large">
         <div class="clickable rnd-large panel-top-left"><a :href="url" target="_blank">🔗</a></div>
         <div class="clickable rnd-large close panel-top-right" @click="close">×</div>
@@ -60,6 +60,7 @@
       charOf: getLogo,
       close() {
         this.hidePerson()
+        this.imgLoaded = false
       },
       select(item) {
         if (isExternalLink(item)) {
@@ -86,6 +87,9 @@
       },
     },
     computed: {
+      show(){
+        return this.person && this.imgLoaded;
+      },
       ...mapState('persons', { person: 'displayedPerson', detailledPerson: 'displayedDetailledPerson' }),
       label() {
         if (this.person) {

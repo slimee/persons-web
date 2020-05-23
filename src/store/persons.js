@@ -24,11 +24,16 @@ export default {
     clearAll: ({ commit }) => commit('setAll', []),
     setAll: ({ commit }, persons) => commit('setAll', persons),
     addAll: ({ commit }, persons) => commit('addAll', persons),
-    showPerson: async ({ state, commit, getters }, index) => {
+    showPerson: async ({ state, commit, getters, dispatch }, index) => {
       commit('setDisplayedPersonIndex', index)
       commit('setDisplayedPerson', state.all[index])
-      commit('setDisplayedDetailledPerson', await persons.get(state.displayedPerson._id))
+      const person = await persons.get(state.displayedPerson._id)
+      commit('setDisplayedDetailledPerson', person)
+      dispatch('title/set', person.name, { root: true })
     },
-    hidePerson: ({ commit }) => commit('hidePerson'),
+    hidePerson: ({ commit, dispatch }) => {
+      commit('hidePerson')
+      dispatch('title/clear', null, { root: true })
+    },
   },
 }

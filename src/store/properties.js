@@ -36,7 +36,7 @@ export default {
         await dispatch('nextPage')
       }
     },
-    async nextPage({ commit, state }) {
+    async nextPage({ commit, state, dispatch }) {
       commit('setCurrentPage', state.currentPage + 1)
 
       const filter = {
@@ -47,6 +47,7 @@ export default {
       const results = await properties.find(filter)
 
       commit('setResults', results)
+      dispatch('title/set', state.term, { root: true })
     },
   },
   getters: {},

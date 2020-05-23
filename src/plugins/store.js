@@ -7,6 +7,7 @@ import search from '../store/search'
 import properties from '../store/properties'
 import layout from '../store/layout'
 import tween from '../store/tween'
+import title from '../store/title'
 
 Vue.use(Vuex)
 
@@ -19,5 +20,6 @@ export default new Vuex.Store({
     properties,
     layout,
     tween,
+    title,
   },
 })

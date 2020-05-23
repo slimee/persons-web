@@ -71,6 +71,7 @@ export default {
             .then(persons => {
               dispatch('persons/setAll', persons, { root: true })
               commit('setLoading', false)
+              dispatch('view/lookAtIndex', 0, { root: true })
             })])
       } else {
         await persons.find(filter)
