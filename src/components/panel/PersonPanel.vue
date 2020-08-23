@@ -31,7 +31,9 @@
           <div class='column property-values'>
             <div class="row">
               <template v-for="(propertyValue,i) in currentPropertyValues">
-                <div @click="select(propertyValue)" class="clickable hoverable">{{clearValue(propertyValue.title, i)}}&nbsp;</div>
+                <div @click="select(propertyValue)" :class="isPerson(propertyValue) ? '':'clickable hoverable'">
+                  {{clearValue(propertyValue.title, i)}}&nbsp;
+                </div>
               </template>
             </div>
           </div>
@@ -55,6 +57,7 @@
       imgLoaded: false,
     }),
     methods: {
+      isPerson,
       ...mapActions('persons', ['hidePerson']),
       ...mapActions('search', ['searchOnProp', 'search']),
       charOf: getLogo,
@@ -66,7 +69,7 @@
         if (isExternalLink(item)) {
           window.open(wikiUrl(item.href))
         } else if (isPerson(item) && item.title) {
-          this.search({ n: item.title })
+           // this.search({ n: item.title })
         } else {
           this.searchOnProp(item)
         }
