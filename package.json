@@ -33,5 +33,6 @@
     "last 2 versions",
     "not ie <= 8"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "engines" : { "node" : "12.16.3" }
 }
