@@ -21,18 +21,9 @@
     components: { DarkModeToggle, SearchOverview, TilesMap, PersonPanel, FilterPanel },
     methods: {
       ...mapActions('search', ['loadNextPage']),
-      ...mapActions('view', ['resizeWindow']),
-      trackWindowSize() {
-        this.resizeWindow(window)
-        window.addEventListener('resize', () => this.resizeWindow(window))
-      },
     },
     computed: {
       ...mapState('route', ['query']),
-    },
-    mounted() {
-      this.trackWindowSize()
-      this.loadNextPage()
     },
     watch: {
       query() {

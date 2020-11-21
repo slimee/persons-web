@@ -1,6 +1,7 @@
 import router from '../plugins/router'
 import persons from '../services/persons'
 import properties, { getLogo } from '../services/properties'
+import {isEmpty} from "../static/util"
 
 export default {
   namespaced: true,
@@ -48,22 +49,20 @@ export default {
       dispatch('view/lookAt', { y: 0 }, { root: true })
       router
         .push({ name: 'PersonTimeline', query: filter })
-        .catch(() => {
-        })
+        .catch(() => {})
     },
     async loadNextPage({ state, commit, getters, dispatch }) {
       if (state.loading) return
+      const filter = {...getters.filter, ps: 30, pn: state.currentPage}
+
       commit('setLoading', true)
-
-      const filter = {
-        ...getters.filter,
-        ps: 30,
-        pn: state.currentPage,
-      }
-
       if (getters.isFirstPage) {
         await dispatch('persons/clearAll', null, { root: true })
         await dispatch('updateProperty')
+        if(isEmpty(getters.filter)) {
+          commit('setLoading', false)
+          return
+        }
         await Promise.all([
           persons.count(getters.filter)
             .then(count => commit('setTotal', count)),

@@ -88,6 +88,10 @@ export default {
       })
     },
     resizeWindow: ({ commit }, window) => commit('resizeWindow', window),
+    listenWindowResize: ({ dispatch }) => {
+      dispatch('resizeWindow', window);
+      window.addEventListener('resize', () => dispatch('resizeWindow', window));
+    }
   },
   getters: {
     tileViewBox: (state, getters, rootState) => {

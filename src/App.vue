@@ -10,7 +10,7 @@
   export default {
     name: 'app',
     mounted() {
-      this.$store.dispatch('app/mount')
+      this.$store.dispatch('app/startApp')
     },
     computed: {
       ...mapState('layout', ['dark']),
