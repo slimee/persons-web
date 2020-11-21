@@ -135,8 +135,8 @@
     font-weight: bold;
     font-size: 2em;
     position: absolute;
-    top: 1em;
-    right: -0.2em;
+    top: 28px;
+    right: -8px;
   }
 
   .hand-arrow {
