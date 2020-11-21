@@ -23,6 +23,7 @@
         </template>
       </list>
     </perfect-scrollbar>
+    <div v-if="showHand" class="search-something"><span class="hand-arrow">☝</span></div>
   </flex-column>
 </template>
 
@@ -40,6 +41,7 @@
     data: () => ({
       inputing: false,
       value: null,
+      showHand: true,
     }),
     computed: {
       ...mapState('properties', { props: 'results' }),
@@ -60,6 +62,7 @@
       ...mapActions('properties', { clearProp: 'clear', searchProp: 'search' }),
       getLogo,
       btnClick() {
+        this.showHand = false;
         if (this.inputing) {
           this.doSearch()
         } else {
@@ -126,5 +129,17 @@
 
   .space-right {
     margin-right: 2em;
+  }
+
+  .search-something {
+    font-weight: bold;
+    font-size: 2em;
+    position: absolute;
+    top: 1em;
+    right: -0.2em;
+  }
+
+  .hand-arrow {
+    font-size: 3em;
   }
 </style>
